@@ -172,4 +172,72 @@ reviewer1 = Reviewer('Danna', 'Scally')
 reviewer2 = Reviewer('Fox', 'Maulder')
 
 # Добавляем курсы для студентов и лекторов
+student1.finished_courses += ['OOP']
+student2.finished_courses += ['Git']
 student1.courses_in_progress += ['Python']
+student2.courses_in_progress += ['Python']
+
+lecturer1.courses_attached += ['Python']
+lecturer2.courses_attached += ['Python']
+reviewer1.courses_attached += ['Python']
+reviewer2.courses_attached += ['Python']
+# Оцениваем домашние задания студентов
+
+reviewer1.rate_hw(student1, 'Python', 9)
+reviewer2.rate_hw(student2, 'Python', 10)
+reviewer1.rate_hw(student2, 'Python', 3)
+reviewer2.rate_hw(student1, 'Python', 8)
+reviewer1.rate_hw(student1, 'Python', 9)
+reviewer2.rate_hw(student2, 'Python', 9)
+
+# Оцениваем лекции лекторов
+
+student1.rate_lecturer(lecturer1, 'Python', 8)
+student2.rate_lecturer(lecturer2, 'Python', 7)
+student1.rate_lecturer(lecturer1, 'Python', 8)
+student2.rate_lecturer(lecturer2, 'Python', 10)
+student1.rate_lecturer(lecturer1, 'Python', 4)
+student2.rate_lecturer(lecturer2, 'Python', 6)
+
+# Выводим информацию о студентах, лекторах и проверяющих
+print("Информация о проверяющих:")
+print(reviewer1)
+print(reviewer2)
+
+print("Информация о лекторах:")
+print(lecturer1)
+print(lecturer2)
+
+print("Информация о студентах:")
+print(student1)
+print(student2)
+
+#реализуем функции подсчета общей средней оценки по курсу:
+
+def avg_grade_by_course(students, course):
+    total_grades = 0
+    total_students = 0
+    for student in students:
+        if course in student.grades:
+            total_grades += sum(student.grades[course])
+            total_students += len(student.grades[course])
+    if total_students == 0:
+        return 0  # Избегаем деления на ноль
+    return total_grades / total_students
+
+avg_students_grade_python = avg_grade_by_course([student1, student2, some_student], 'Python')
+print(f'Средняя оценка за домашние задания по курсу Python: {avg_students_grade_python}')
+
+def avg_lectures_grade_by_course(lecturers, course):
+    total_grades = 0
+    total_lecturers = 0
+    for lecturer in lecturers:
+        if course in lecturer.grades:
+            total_grades += sum(lecturer.grades[course])
+            total_lecturers += len(lecturer.grades[course])
+    if total_lecturers == 0:
+        return 0
+    return total_grades / total_lecturers
+
+avg_lectures_grade_python = avg_lectures_grade_by_course([lecturer1, lecturer2, some_lecturer], 'Python')
+print(f'Средняя оценка за лекции по курсу Python: {avg_lectures_grade_python}')
